@@ -18,9 +18,9 @@ namespace Jacco.AOC
             foreach (var challenge in challenges)
             {
                 Console.WriteLine($"Day {challenge.day}: {challenge.title}");
-                string[] exampleInput = Helpers.Input.ReadLines($"src/Challenges/Day{challenge.day.ToString("00")}/data/example.txt");
-                string[] example2Input = Helpers.Input.ReadLines($"src/Challenges/Day{challenge.day.ToString("00")}/data/example2.txt");
-                string[] input = Helpers.Input.ReadLines($"src/Challenges/Day{challenge.day.ToString("00")}/data/input.txt");
+                string[] exampleInput = File.ReadAllLines($"src/Challenges/Day{challenge.day.ToString("00")}/data/example.txt");
+                string[] example2Input = File.ReadAllLines($"src/Challenges/Day{challenge.day.ToString("00")}/data/example2.txt");
+                string[] input = File.ReadAllLines($"src/Challenges/Day{challenge.day.ToString("00")}/data/input.txt");
 
                 Console.WriteLine(" Part 1:");
 
