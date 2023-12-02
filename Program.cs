@@ -1,13 +1,31 @@
 ﻿using Jacco.AOC;
-using Jacco.AOC.Challenges;
 
-// Create runner
-ChallengeRunner runner = new ChallengeRunner();
+ChallengeRunner challengeRunner = new();
 
-// Register challenges
-runner.RegisterChallenge(new Day01());
-runner.RegisterChallenge(new Day02());
+// Get year and day from args
+int year = 0;
+int day = 0;
 
-// Run challenges
-runner.Run();
+if (args.Length > 0) {
+    year = int.Parse(args[0]);
+}
 
+if (args.Length > 1) {
+    day = int.Parse(args[1]);
+}
+
+// Welcome message
+WelcomeMessage.Show();
+// WelcomeMessage.PrintTitle("Jacco's Advent Of Code attempt!", "Happy Hollidays! <3");
+
+// Run challenge
+if (year == 0 && day == 0) {
+    Console.WriteLine("Running last challenge!");
+    challengeRunner.RunLastChallenge();
+} else if (year > 0 && day == 0) {
+    Console.WriteLine($"Running all challenges from {year}!");
+    challengeRunner.RunYear(year);
+} else {
+    Console.WriteLine($"Running challenge {year} day {day}!");
+    challengeRunner.RunChallenge(year, day);
+}

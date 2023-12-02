@@ -1,11 +1,12 @@
 using System.Text.RegularExpressions;
 
-namespace Jacco.AOC.Challenges
+namespace Jacco.AOC.Challenges_2023
 {
     public class Day02: IChallenge
     {
-        public string title { get; set; } = "Cube Conundrum";
-        public int day { get; set; } = 2;
+        public string Title { get; set; } = "Cube Conundrum";
+        public int Day { get; set; } = 2;
+        public int Year { get; set; } = 2023;
 
         private class Game 
         {

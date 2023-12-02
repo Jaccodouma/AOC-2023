@@ -1,11 +1,12 @@
 using System.Text.RegularExpressions;
 
-namespace Jacco.AOC.Challenges
+namespace Jacco.AOC.Challenges_2023
 {
     public class Day01: IChallenge
     {
-        public string title { get; set; } = "Trebuchet?!";
-        public int day { get; set; } = 1;
+        public string Title { get; set; } = "Trebuchet?!";
+        public int Day { get; set; } = 1;
+        public int Year { get; set; } = 2023;
 
         private int GetCalibrationValue(string input) {
             // Remove all non-numbers
