@@ -23,9 +23,6 @@ namespace Jacco.AOC.Challenges_2023
                     int number = int.Parse(match.Value);
                     int length = match.Length;
 
-                    int beforePosition = index - 1;
-                    int afterPosition = index + length;
-
                     // Loop through lines 
                     for (int line = i - 1; line <= i + 1; line++)
                     {
