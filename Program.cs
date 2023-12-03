@@ -15,8 +15,7 @@ if (args.Length > 1) {
 }
 
 // Welcome message
-WelcomeMessage.Show();
-// WelcomeMessage.PrintTitle("Jacco's Advent Of Code attempt!", "Happy Hollidays! <3");
+ConsoleWrapper.PrintTitle("Jacco's Advent Of Code attempt!", "Happy Hollidays! <3");
 
 // Run challenge
 if (year == 0 && day == 0) {
