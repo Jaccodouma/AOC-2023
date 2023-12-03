@@ -2,8 +2,18 @@ namespace Jacco.AOC
 {
     public class ConsoleWrapper
     {
-        private static int StarChance = 75;
-        private static char[] Stars = new char[] { '*' };
+        private static int StarChance = 50;
+        private static char[] Stars = new char[] { '*', '\'', '.' };
+
+        private static ConsoleColor[] potentialStarColours = new ConsoleColor[] {
+            ConsoleColor.Yellow,
+            ConsoleColor.Red,
+            ConsoleColor.Green,
+            ConsoleColor.Blue,
+            ConsoleColor.Magenta,
+            ConsoleColor.Cyan,
+            ConsoleColor.White
+        };
 
         private enum BarType
         {
@@ -13,11 +23,28 @@ namespace Jacco.AOC
             Bottom
         }
 
+        private static int lastStar = 0;
+
+        private static void PrintPotentialStar() {
+            var oldColour = Console.ForegroundColor;
+            int r = new Random().Next(0, 100);
+            // Randomly print a star, or not
+            if (lastStar > 0 && r <= StarChance) {
+                Console.ForegroundColor = potentialStarColours[new Random().Next(0, potentialStarColours.Length)];
+                Console.Write(Stars[new Random().Next(0, Stars.Length)]);
+                lastStar = 0;
+            } else {
+                Console.Write(" ");
+                lastStar++;
+            }
+            Console.ForegroundColor = oldColour;
+        }
+
         private static void PrintHorizontalBar(int length, BarType barType)
         {
             // Set left based on bar type
-            string left = "╠"; 
-            string right = "╣"; 
+            string left = "╠";
+            string right = "╣";
             string middle = "═";
 
             switch (barType)
@@ -48,59 +75,67 @@ namespace Jacco.AOC
             Console.WriteLine(right);
         }
 
+        private static void PrintEmptyLine(int length)
+        {
+            Console.Write("║");
+            for (int i = 0; i < length; i++)
+            {
+                PrintPotentialStar();
+                // Console.Write(" ");
+            }
+            Console.WriteLine("║");
+        }
+
         public static void PrintTitle(string title, string subtitle)
         {
+            // Pad title and subtitle with a space (for the stars)
+            title = $" {title} ";
+            subtitle = $" {subtitle} ";
+
             int maxWidth = title.Length > subtitle.Length ? title.Length : subtitle.Length;
             int padding = maxWidth / 4;
+            int width = maxWidth + 2 * padding;
 
             Console.ForegroundColor = ConsoleColor.Red;
 
-            PrintHorizontalBar(maxWidth + 2*padding, BarType.Top);
+            PrintHorizontalBar(width, BarType.Top);
+            PrintEmptyLine(width);
 
             // Write title
             Console.Write("║");
             for (int i = 0; i < padding; i++)
             {
-                Console.Write(" ");
+                PrintPotentialStar();
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(title);
+            Console.ForegroundColor = ConsoleColor.Red;
             for (int i = 0; i < padding; i++)
             {
-                Console.Write(" ");
+                PrintPotentialStar();
             }
             Console.WriteLine("║");
 
-            PrintHorizontalBar(maxWidth + 2*padding, BarType.MiddleThin);
+            PrintEmptyLine(width);
+            PrintHorizontalBar(width, BarType.MiddleThin);
 
-            PrintHorizontalBar(maxWidth + 2*padding, BarType.Bottom);
-        }
+            // Write subtitle
+            int subtitlePadding = (width - subtitle.Length) / 2;
+            Console.Write("║");
+            for (int i = 0; i < subtitlePadding; i++)
+            {
+                PrintPotentialStar();
+            }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write(subtitle);
+            Console.ForegroundColor = ConsoleColor.Red;
+            for (int i = 0; i < width - subtitlePadding - subtitle.Length; i++)
+            {
+                PrintPotentialStar();
+            }
+            Console.WriteLine("║");
 
-        public static void PotentialStarLine(int length)
-        {
-            for (int i = 0; i < length; i++)
-            {
-                PotentialStar();
-            }
-        }
-
-        private static int lastStar = 0;
-        public static void PotentialStar()
-        {
-            var oldColour = Console.ForegroundColor;
-            int r = new Random().Next(0, 100);
-            // Randomly print a star, or not
-            if (r > StarChance && lastStar > 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write(Stars[new Random().Next(0, Stars.Length)]);
-                lastStar = 0;
-            }
-            else
-            {
-                Console.Write(" ");
-                lastStar++;
-            }
-            Console.ForegroundColor = oldColour;
+            PrintHorizontalBar(width, BarType.Bottom);
         }
     }
 }
