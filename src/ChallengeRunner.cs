@@ -11,7 +11,7 @@ namespace Jacco.AOC
         public int Part1(string[] input);
         public int Part2(string[] input);
 
-        public void Run() {
+        public void Run(bool exampleOnly) {
             Console.WriteLine($"Day {Day}: {Title}");
             string dataPath = $"src/Challenges/{Year}/Day{Day.ToString("00")}/data";
             string[] exampleInput = File.ReadAllLines($"{dataPath}/example.txt");
@@ -23,16 +23,20 @@ namespace Jacco.AOC
             int exampleResult = Part1(exampleInput);
             Console.WriteLine($"    Example: {exampleResult}");
 
-            int result = Part1(input);
-            Console.WriteLine($"    Result: {result}");
+            if (!exampleOnly) {
+                int result = Part1(input);
+                Console.WriteLine($"    Result: {result}");
+            }
 
             Console.WriteLine(" Part 2:");
 
             int exampleResult2 = Part2(example2Input);
             Console.WriteLine($"    Example: {exampleResult2}");
 
-            int result2 = Part2(input);
-            Console.WriteLine($"    Result: {result2}");
+            if (!exampleOnly) {
+                int result2 = Part2(input);
+                Console.WriteLine($"    Result: {result2}");
+            }
         }
     }
 
@@ -40,7 +44,11 @@ namespace Jacco.AOC
     {
         List<IChallenge> challenges = new();
 
-        public ChallengeRunner() {
+        bool examplesOnly;
+
+        public ChallengeRunner(bool examplesOnly = false) {
+            this.examplesOnly = examplesOnly;
+
             // Get all challenges
             var challenges = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IChallenge)));
 
@@ -53,24 +61,24 @@ namespace Jacco.AOC
 
         public void RunYear(int year) {
             // Run all challenges from year
-            challenges.Where(c => c.Year == year).ToList().ForEach(c => c.Run());
+            challenges.Where(c => c.Year == year).ToList().ForEach(c => c.Run(examplesOnly));
         }
 
         public void RunChallenge(int year, int day) {
-            challenges.Where(c => c.Year == year && c.Day == day).ToList().ForEach(c => c.Run());
+            challenges.Where(c => c.Year == year && c.Day == day).ToList().ForEach(c => c.Run(examplesOnly));
         }
 
         public void RunAll() {
             // Run all challenges
             foreach (var challenge in challenges)
             {
-                challenge.Run();
+                challenge.Run(examplesOnly);
             }
         }
 
         public void RunLastChallenge() {
             // Run last challenge
-            challenges.Last().Run();
+            challenges.Last().Run(examplesOnly);
         }
 
         public void RegisterChallenge(IChallenge challenge) {
