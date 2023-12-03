@@ -3,7 +3,9 @@ namespace Jacco.AOC
     public class ConsoleWrapper
     {
         private static int StarChance = 50;
-        private static char[] Stars = new char[] { '*', '\'', '.' };
+        private static char[] Stars = new char[] { '*', '\'', '.', '`', ',', '°', '·' };
+
+        private static ConsoleColor EdgeColor = ConsoleColor.Red;
 
         private static ConsoleColor[] potentialStarColours = new ConsoleColor[] {
             ConsoleColor.Yellow,
@@ -81,7 +83,6 @@ namespace Jacco.AOC
             for (int i = 0; i < length; i++)
             {
                 PrintPotentialStar();
-                // Console.Write(" ");
             }
             Console.WriteLine("║");
         }
@@ -93,10 +94,11 @@ namespace Jacco.AOC
             subtitle = $" {subtitle} ";
 
             int maxWidth = title.Length > subtitle.Length ? title.Length : subtitle.Length;
-            int padding = maxWidth / 4;
+            // maxWidth = Console.WindowWidth/3;
+            int padding = maxWidth / 2;
             int width = maxWidth + 2 * padding;
 
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = EdgeColor;
 
             PrintHorizontalBar(width, BarType.Top);
             PrintEmptyLine(width);
@@ -109,7 +111,7 @@ namespace Jacco.AOC
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(title);
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = EdgeColor;
             for (int i = 0; i < padding; i++)
             {
                 PrintPotentialStar();
@@ -128,7 +130,7 @@ namespace Jacco.AOC
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write(subtitle);
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = EdgeColor;
             for (int i = 0; i < width - subtitlePadding - subtitle.Length; i++)
             {
                 PrintPotentialStar();
