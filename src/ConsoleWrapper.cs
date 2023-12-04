@@ -87,7 +87,7 @@ namespace Jacco.AOC
             Console.WriteLine("║");
         }
 
-        public static void PrintTitle(string title, string subtitle)
+        public static void Init(string title, string subtitle)
         {
             // Pad title and subtitle with a space (for the stars)
             title = $" {title} ";

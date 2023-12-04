@@ -24,7 +24,7 @@ if (args.Length > 1) {
 #endregion
 
 // Welcome message
-ConsoleWrapper.PrintTitle("Jacco's Advent Of Code attempt!", "Happy Holidays! <3");
+ConsoleWrapper.Init("Jacco's Advent Of Code attempt!", "Happy Holidays! <3");
 
 // Create challenge runner
 ChallengeRunner challengeRunner = new(examplesOnly);
