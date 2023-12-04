@@ -13,7 +13,7 @@ namespace Jacco.AOC
 
         public void Run(bool exampleOnly) {
             Console.WriteLine($"Day {Day}: {Title}");
-            string dataPath = $"src/Challenges/{Year}/Day{Day.ToString("00")}/data";
+            string dataPath = $"data/{Year}/{Day.ToString("00")}";
             string[] exampleInput = File.ReadAllLines($"{dataPath}/example.txt");
             string[] example2Input = File.ReadAllLines($"{dataPath}/example2.txt");
             string[] input = File.ReadAllLines($"{dataPath}/input.txt");
