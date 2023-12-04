@@ -18,15 +18,16 @@ namespace Jacco.AOC.Challenges_2023
             {
                 // line: 
                 // Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
-                id = int.Parse(Regex.Match(line, @"\d+").Value);
+                var parts = line.Split(new string[] { ":", "|" }, StringSplitOptions.RemoveEmptyEntries);
+                id = int.Parse(parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries)[1]);
 
-                string[] strings = line.Split(':')[1].Split('|');
-                winningNumbers = Regex
-                    .Split(strings[0].Trim(), @"\s+")
+                winningNumbers = parts[1]
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(int.Parse)
                     .ToArray();
-                numbers = Regex
-                    .Split(strings[1].Trim(), @"\s+")
+
+                numbers = parts[2]
+                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(int.Parse)
                     .ToArray();
             }
