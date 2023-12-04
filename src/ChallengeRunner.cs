@@ -18,25 +18,31 @@ namespace Jacco.AOC
             string[] example2Input = File.ReadAllLines($"{dataPath}/example2.txt");
             string[] input = File.ReadAllLines($"{dataPath}/input.txt");
 
-            Console.WriteLine("  Part 1:");
+            for (int part = 1; part <= 2; part++) {
+                Console.WriteLine($"  Part {part}:");
+                
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                int exampleResult = part == 1 ? Part1(exampleInput) : Part2(example2Input);
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                Console.WriteLine($"    Example: {exampleResult} ({elapsedMs}ms)");
 
-            int exampleResult = Part1(exampleInput);
-            Console.WriteLine($"    Example: {exampleResult}");
+                if (exampleOnly) continue;
 
-            if (!exampleOnly) {
-                int result = Part1(input);
-                Console.WriteLine($"    Result: {result}");
+                watch = System.Diagnostics.Stopwatch.StartNew();
+                int result = part == 1 ? Part1(input) : Part2(input);
+                watch.Stop();
+                elapsedMs = watch.ElapsedMilliseconds;
+                Console.WriteLine($"    Result: {result} ({elapsedMs}ms)");
             }
+        }
 
-            Console.WriteLine(" Part 2:");
-
-            int exampleResult2 = Part2(example2Input);
-            Console.WriteLine($"    Example: {exampleResult2}");
-
-            if (!exampleOnly) {
-                int result2 = Part2(input);
-                Console.WriteLine($"    Result: {result2}");
-            }
+        private void RunPart(string[] input, int part) {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            int result = part == 1 ? Part1(input) : Part2(input);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine($"    Result: {result} ({elapsedMs}ms)");
         }
     }
 
