@@ -31,7 +31,7 @@ namespace Jacco.AOC.Challenges_2023
                     .ToArray();
             }
 
-            public int GetWinningNumberAmount()
+            public int GetWinningNumbersCount()
             {
                 int i = 0;
                 foreach (int number in winningNumbers)
@@ -88,7 +88,7 @@ namespace Jacco.AOC.Challenges_2023
             input.ToList().ForEach(line =>
             {
                 Card card = new Card(line);
-                int winningNumbersCount = card.GetWinningNumberAmount();
+                int winningNumbersCount = card.GetWinningNumbersCount();
                 int instances = instanceNumbers.ContainsKey(card.id) ? instanceNumbers[card.id] : 1;
 
                 for (int instance = 0; instance < instances; instance++)
