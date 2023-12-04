@@ -91,19 +91,16 @@ namespace Jacco.AOC.Challenges_2023
                 int winningNumbersCount = card.GetWinningNumbersCount();
                 int instances = instanceNumbers.ContainsKey(card.id) ? instanceNumbers[card.id] : 1;
 
-                for (int instance = 0; instance < instances; instance++)
+                for (int i = 1; i <= winningNumbersCount; i++)
                 {
-                    for (int i = 1; i <= winningNumbersCount; i++)
+                    int key = card.id + i;
+                    if (instanceNumbers.ContainsKey(key))
                     {
-                        int key = card.id + i;
-                        if (instanceNumbers.ContainsKey(key))
-                        {
-                            instanceNumbers[key]++;
-                        }
-                        else
-                        {
-                            instanceNumbers.Add(key, 2);
-                        }
+                        instanceNumbers[key] += instances;
+                    }
+                    else
+                    {
+                        instanceNumbers.Add(key, instances + 1);
                     }
                 }
 
