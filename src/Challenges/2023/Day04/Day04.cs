@@ -4,7 +4,7 @@ namespace Jacco.AOC.Challenges_2023
 {
     public class Day04 : IChallenge
     {
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = "Scratchcards";
         public int Day { get; set; } = 4;
         public int Year { get; set; } = 2023;
 
