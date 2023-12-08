@@ -15,6 +15,28 @@ namespace Jacco.AOC.Challenges_2023
             public required string Right;
         }
 
+        // Function to return
+        // gcd of a and b
+        static int __gcd(int a, int b)
+        {
+            if (a == 0)
+                return b;
+            return __gcd(b % a, a);
+        }
+
+        //recursive implementation
+        static int LcmOfArray(int[] arr, int idx = 0)
+        {
+            // lcm(a,b) = (a*b/gcd(a,b))
+            if (idx == arr.Length - 1)
+            {
+                return arr[idx];
+            }
+            int a = arr[idx];
+            int b = LcmOfArray(arr, idx + 1);
+            return (a * b / __gcd(a, b)); // __gcd(a,b) is inbuilt library function
+        }
+
         public int Part1(string[] input)
         {
             char[] instructions = input[0].ToCharArray();
@@ -69,29 +91,52 @@ namespace Jacco.AOC.Challenges_2023
                 };
             });
 
-            int steps = 0;
-
             // Fill currentLocations with all maps ending with A
             string[] currentLocations = map.Keys.Where(k => k.EndsWith("A")).ToArray();
+            int[] pathLengths = new int[currentLocations.Length];
 
-            // While currentlocations contains any map not ending with Z 
-            while (currentLocations.Any(k => !k.EndsWith("Z")))
+            #region brute force
+            // int steps = 0;
+
+            // // While currentlocations contains any map not ending with Z 
+            // while (currentLocations.Any(k => !k.EndsWith("Z")))
+            // {
+            //     char instruction = instructions[steps%instructions.Length];
+
+            //     currentLocations = currentLocations.Select(location => {
+            //         return instruction switch
+            //         {
+            //             'L' => map[location].Left,
+            //             'R' => map[location].Right,
+            //             _ => throw new Exception("Invalid instruction")
+            //         };
+            //     }).ToArray();
+
+            //     steps++;
+            // }
+            #endregion
+
+            for (int i = 0; i < currentLocations.Length; i++)
             {
-                char instruction = instructions[steps%instructions.Length];
+                string currentLocation = currentLocations[i];
+                pathLengths[i] = 0;
 
-                currentLocations = currentLocations.Select(location => {
-                    return instruction switch
+                while (!currentLocation.EndsWith("Z"))
+                {
+                    char instruction = instructions[pathLengths[i] % instructions.Length];
+                    currentLocation = instruction switch
                     {
-                        'L' => map[location].Left,
-                        'R' => map[location].Right,
+                        'L' => map[currentLocation].Left,
+                        'R' => map[currentLocation].Right,
                         _ => throw new Exception("Invalid instruction")
                     };
-                }).ToArray();
-
-                steps++;
+                    pathLengths[i]++;
+                }
             }
 
-            return steps;
+            Console.WriteLine(string.Join(", ", pathLengths));
+
+            return LcmOfArray(pathLengths);
         }
     }
 }
