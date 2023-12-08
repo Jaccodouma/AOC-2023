@@ -37,7 +37,7 @@ namespace Jacco.AOC.Challenges_2023
 
             while (currentLocation != "ZZZ")
             {
-                char instruction = instructions[steps%instructions.Length];
+                char instruction = instructions[steps % instructions.Length];
 
                 currentLocation = instruction switch
                 {
@@ -54,7 +54,44 @@ namespace Jacco.AOC.Challenges_2023
 
         public int Part2(string[] input)
         {
-            return 0;
+            char[] instructions = input[0].ToCharArray();
+
+            // Build up map of instructions 
+            Dictionary<string, Instruction> map = new Dictionary<string, Instruction>();
+
+            input[2..].ToList().ForEach(line =>
+            {
+                string[] vals = Regex.Matches(line, "\\w+").Select(m => m.Value).ToArray();
+                map[vals[0]] = new Instruction
+                {
+                    Left = vals[1],
+                    Right = vals[2]
+                };
+            });
+
+            int steps = 0;
+
+            // Fill currentLocations with all maps ending with A
+            string[] currentLocations = map.Keys.Where(k => k.EndsWith("A")).ToArray();
+
+            // While currentlocations contains any map not ending with Z 
+            while (currentLocations.Any(k => !k.EndsWith("Z")))
+            {
+                char instruction = instructions[steps%instructions.Length];
+
+                currentLocations = currentLocations.Select(location => {
+                    return instruction switch
+                    {
+                        'L' => map[location].Left,
+                        'R' => map[location].Right,
+                        _ => throw new Exception("Invalid instruction")
+                    };
+                }).ToArray();
+
+                steps++;
+            }
+
+            return steps;
         }
     }
 }
